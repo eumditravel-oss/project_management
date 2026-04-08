@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>업무관리 - 프로젝트</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="container">
+
+  <h1>업무관리</h1>
+
+  <!-- 프로젝트 리스트 -->
+  <div id="projectList">
+    <h2>프로젝트 리스트</h2>
+    <ul>
+      <li onclick="openProject()">프로젝트 A</li>
+      <li onclick="openProject()">프로젝트 B</li>
+    </ul>
+  </div>
+
+  <!-- 프로젝트 상세 -->
+  <div id="projectDetail" class="hidden">
+
+    <button onclick="backToList()">← 뒤로가기</button>
+
+    <h2>프로젝트 상세</h2>
+
+    <!-- 탭 -->
+    <div class="tabs">
+      <button onclick="showTab('meeting')">회의록</button>
+      <button onclick="showTab('member')">배정인원</button>
+      <button onclick="showTab('mail')">관련메일</button>
+      <button onclick="showTab('order')">수주일정</button>
+      <button onclick="showTab('complete')">완료시점</button>
+      <button onclick="showTab('delivery')">납품관리</button>
+    </div>
+
+    <!-- 회의록 -->
+    <div id="meeting" class="tab">
+      <h3>회의록</h3>
+      <table>
+        <tr><th>날짜</th><th>회의명</th></tr>
+        <tr onclick="alert('회의록 상세')"><td>2026-04-01</td><td>외부 미팅</td></tr>
+      </table>
+    </div>
+
+    <!-- 배정인원 -->
+    <div id="member" class="tab hidden">
+      <h3>프로젝트 배정인원</h3>
+      <pre>
+구조
+ ├ 기초 (팀장, 직원1, 직원2, 직원3)
+ ├ 주차장 수평
+ ├ 주차장 수직
+ ├ 아파트 수평
+ └ 아파트 수직
+
+마감
+ ├ 내부
+ ├ 외부
+ ├ 조적
+ └ 창호
+
+토목 / 클레임 / ES
+      </pre>
+    </div>
+
+    <!-- 메일 -->
+    <div id="mail" class="tab hidden">
+      <h3>관련메일</h3>
+      <table>
+        <tr><th>발신자</th><th>제목</th></tr>
+        <tr><td>홍길동</td><td>프로젝트 관련 문의</td></tr>
+      </table>
+    </div>
+
+    <!-- 수주 -->
+    <div id="order" class="tab hidden">
+      <h3>수주일정</h3>
+      <p>수주일: 2026-04-01</p>
+
+      <button onclick="requestReason()">착수 지연 사유서 작성</button>
+      <button onclick="approve()">승인</button>
+
+      <p id="startDate"></p>
+    </div>
+
+    <!-- 완료 -->
+    <div id="complete" class="tab hidden">
+      <h3>완료시점</h3>
+      <p>완료예정일: 2026-12-30</p>
+      <button onclick="changeComplete()">변경</button>
+    </div>
+
+    <!-- 납품 -->
+    <div id="delivery" class="tab hidden">
+      <h3>납품관리</h3>
+      <ul>
+        <li>1차 납품 <button onclick="requestDownload()">다운로드 요청</button></li>
+        <li>2차 납품 <button onclick="requestDownload()">다운로드 요청</button></li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
