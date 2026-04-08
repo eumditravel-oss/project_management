@@ -2,111 +2,327 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>업무관리 - 프로젝트</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Con-Cost Groupware - 업무관리</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="app-shell">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand-mark">C</div>
+        <div class="brand-text">
+          <strong>Con-Cost Groupware</strong>
+          <span>업무관리 / 프로젝트 통합 상세</span>
+        </div>
+      </div>
 
-<div class="container">
+      <nav class="top-tabs">
+        <button class="top-tab">전자메일</button>
+        <button class="top-tab">전자결재</button>
+        <button class="top-tab active">업무관리</button>
+        <button class="top-tab">산출</button>
+        <button class="top-tab">일정관리</button>
+      </nav>
 
-  <h1>업무관리</h1>
+      <div class="topbar-right">
+        <div class="user-chip">park yongjin</div>
+      </div>
+    </header>
 
-  <!-- 프로젝트 리스트 -->
-  <div id="projectList">
-    <h2>프로젝트 리스트</h2>
-    <ul>
-      <li onclick="openProject()">프로젝트 A</li>
-      <li onclick="openProject()">프로젝트 B</li>
-    </ul>
+    <!-- Main -->
+    <div class="main-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-title">업무관리</div>
+          <button class="side-link active">프로젝트 관리</button>
+          <button class="side-link">업무일지</button>
+          <button class="side-link">업무일지 승인</button>
+          <button class="side-link">프로젝트 소요시간</button>
+          <button class="side-link">종합 공정관리</button>
+          <button class="side-link">납품 업로드</button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">프로젝트 목록</div>
+          <div id="projectList" class="project-list"></div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">바로가기</div>
+          <a class="anchor-link" href="#overview">프로젝트 개요</a>
+          <a class="anchor-link" href="#meeting">회의록</a>
+          <a class="anchor-link" href="#assignment">배정인원</a>
+          <a class="anchor-link" href="#emails">관련메일</a>
+          <a class="anchor-link" href="#order">수주일정</a>
+          <a class="anchor-link" href="#completion">완료시점</a>
+          <a class="anchor-link" href="#delivery">납품관리</a>
+          <a class="anchor-link" href="#dev-guide">개발 전달 포인트</a>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <main class="content-area">
+        <section class="page-header">
+          <div>
+            <h1 id="projectTitle">프로젝트 상세</h1>
+            <p id="projectSubtitle">프로젝트를 선택하면 전체 업무관리 정보를 한 화면에서 확인할 수 있습니다.</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary" id="btnSimulateDelay">착수지연 사유서 작성</button>
+            <button class="btn btn-secondary" id="btnSimulateApprove">상부 승인 처리</button>
+            <button class="btn btn-secondary" id="btnSimulateScheduleChange">완료일정 변경</button>
+          </div>
+        </section>
+
+        <section id="overview" class="card overview-card">
+          <div class="card-header">
+            <h2>프로젝트 개요</h2>
+            <span class="status-badge" id="projectStatusBadge">진행중</span>
+          </div>
+
+          <div class="overview-grid">
+            <div class="info-box">
+              <div class="label">프로젝트명</div>
+              <div class="value" id="summaryProjectName">-</div>
+            </div>
+            <div class="info-box">
+              <div class="label">발주처</div>
+              <div class="value" id="summaryClient">-</div>
+            </div>
+            <div class="info-box">
+              <div class="label">담당부서</div>
+              <div class="value" id="summaryDept">-</div>
+            </div>
+            <div class="info-box">
+              <div class="label">프로젝트 PM</div>
+              <div class="value" id="summaryPm">-</div>
+            </div>
+            <div class="info-box">
+              <div class="label">수주일자</div>
+              <div class="value" id="summaryOrderDate">-</div>
+            </div>
+            <div class="info-box">
+              <div class="label">착수일자</div>
+              <div class="value" id="summaryStartDate">-</div>
+            </div>
+            <div class="info-box">
+              <div class="label">완료예정일</div>
+              <div class="value" id="summaryDueDate">-</div>
+            </div>
+            <div class="info-box">
+              <div class="label">납품차수</div>
+              <div class="value" id="summaryDeliveryCount">-</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="meeting" class="card">
+          <div class="card-header">
+            <h2>회의록</h2>
+            <span class="card-sub">날짜 / 회의명 / 작성자 / 상세보기</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>날짜</th>
+                  <th>회의명</th>
+                  <th>작성자</th>
+                  <th>상세</th>
+                </tr>
+              </thead>
+              <tbody id="meetingTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="assignment" class="card">
+          <div class="card-header">
+            <h2>프로젝트 배정인원</h2>
+            <span class="card-sub">대분류 / 소분류 / 투입인원</span>
+          </div>
+          <div id="assignmentGrid" class="assignment-grid"></div>
+        </section>
+
+        <section id="emails" class="card">
+          <div class="card-header">
+            <h2>관련메일</h2>
+            <span class="card-sub">프로젝트 관련 송수신 메일 리스트</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>날짜</th>
+                  <th>구분</th>
+                  <th>발신자</th>
+                  <th>수신자</th>
+                  <th>제목</th>
+                </tr>
+              </thead>
+              <tbody id="emailTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="order" class="card">
+          <div class="card-header">
+            <h2>수주일정</h2>
+            <span class="card-sub">수주일 / 착수일 / 지연 사유서 / 승인 상태</span>
+          </div>
+
+          <div class="schedule-grid">
+            <div class="schedule-box">
+              <div class="label">수주일자</div>
+              <div class="value" id="orderDateBox">-</div>
+            </div>
+            <div class="schedule-box">
+              <div class="label">착수일자</div>
+              <div class="value" id="startDateBox">-</div>
+            </div>
+            <div class="schedule-box">
+              <div class="label">지연 사유서 여부</div>
+              <div class="value" id="delayReasonStatus">-</div>
+            </div>
+            <div class="schedule-box">
+              <div class="label">상부 승인 여부</div>
+              <div class="value" id="approvalStatus">-</div>
+            </div>
+          </div>
+
+          <div class="history-panel">
+            <div class="history-title">착수 지연 사유</div>
+            <div id="delayReasonText" class="history-body">즉시 착수 가능</div>
+          </div>
+
+          <div class="history-panel">
+            <div class="history-title">처리 이력</div>
+            <ul id="orderHistoryList" class="timeline-list"></ul>
+          </div>
+        </section>
+
+        <section id="completion" class="card">
+          <div class="card-header">
+            <h2>완료시점</h2>
+            <span class="card-sub">완료예정일 / 변경 이력 / 변경 사유</span>
+          </div>
+
+          <div class="schedule-grid">
+            <div class="schedule-box">
+              <div class="label">현재 완료예정일</div>
+              <div class="value" id="currentCompletionDate">-</div>
+            </div>
+            <div class="schedule-box">
+              <div class="label">최근 변경 여부</div>
+              <div class="value" id="completionChangedStatus">-</div>
+            </div>
+          </div>
+
+          <div class="history-panel">
+            <div class="history-title">완료 일정 변경 이력</div>
+            <ul id="completionHistoryList" class="timeline-list"></ul>
+          </div>
+        </section>
+
+        <section id="delivery" class="card">
+          <div class="card-header">
+            <h2>납품관리</h2>
+            <span class="card-sub">차수별 납품 / 업로드 파일 / 다운로드 승인 여부</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>차수</th>
+                  <th>납품일</th>
+                  <th>업로드 파일</th>
+                  <th>다운로드 권한</th>
+                  <th>요청</th>
+                </tr>
+              </thead>
+              <tbody id="deliveryTableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="history-panel">
+            <div class="history-title">다운로드 승인 정책</div>
+            <div class="history-body">
+              업로드된 납품자료를 내려받으려면 반드시 실장의 허가가 필요합니다.
+              다운로드 요청 생성 → 실장 승인 → 승인된 사용자만 다운로드 가능
+            </div>
+          </div>
+        </section>
+
+        <section id="dev-guide" class="card">
+          <div class="card-header">
+            <h2>개발자 전달 포인트</h2>
+            <span class="card-sub">화면 구조 / 데이터 구조 / 권한 로직</span>
+          </div>
+
+          <div class="dev-guide-grid">
+            <div class="guide-box">
+              <h3>화면 구조</h3>
+              <ul>
+                <li>업무관리 > 프로젝트 목록 > 프로젝트 상세</li>
+                <li>상세 페이지는 탭이 아니라 스크롤형 단일 화면</li>
+                <li>각 섹션은 카드형 컴포넌트로 분리</li>
+                <li>좌측 바로가기 메뉴로 해당 섹션 이동</li>
+              </ul>
+            </div>
+
+            <div class="guide-box">
+              <h3>데이터 구조</h3>
+              <ul>
+                <li>프로젝트 기본정보</li>
+                <li>회의록 리스트 + 상세</li>
+                <li>배정인원(대분류/소분류/인원목록)</li>
+                <li>관련메일 리스트</li>
+                <li>수주일정 + 지연사유서 + 승인상태</li>
+                <li>완료예정일 + 변경사유 히스토리</li>
+                <li>납품차수 + 파일 + 다운로드 권한 상태</li>
+              </ul>
+            </div>
+
+            <div class="guide-box">
+              <h3>권한 로직</h3>
+              <ul>
+                <li>수주 후 즉시 착수 불가 시 사유서 작성 필요</li>
+                <li>상부 승인 완료 후 착수일 입력 가능</li>
+                <li>완료예정일 변경 시 사유 입력 필수</li>
+                <li>납품자료 다운로드는 실장 승인 필수</li>
+              </ul>
+            </div>
+
+            <div class="guide-box">
+              <h3>개발 권장사항</h3>
+              <ul>
+                <li>프로젝트 ID 기준으로 회의록/메일/납품 연계</li>
+                <li>변경 로그는 별도 테이블 또는 이력 컬렉션으로 저장</li>
+                <li>다운로드 권한은 승인 상태와 사용자 역할을 함께 검사</li>
+                <li>상세 페이지는 추후 API 연동 고려한 구조로 분리</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   </div>
 
-  <!-- 프로젝트 상세 -->
-  <div id="projectDetail" class="hidden">
-
-    <button onclick="backToList()">← 뒤로가기</button>
-
-    <h2>프로젝트 상세</h2>
-
-    <!-- 탭 -->
-    <div class="tabs">
-      <button onclick="showTab('meeting')">회의록</button>
-      <button onclick="showTab('member')">배정인원</button>
-      <button onclick="showTab('mail')">관련메일</button>
-      <button onclick="showTab('order')">수주일정</button>
-      <button onclick="showTab('complete')">완료시점</button>
-      <button onclick="showTab('delivery')">납품관리</button>
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3 id="modalTitle">상세보기</h3>
+        <button class="icon-btn" id="closeModalBtn">✕</button>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
     </div>
-
-    <!-- 회의록 -->
-    <div id="meeting" class="tab">
-      <h3>회의록</h3>
-      <table>
-        <tr><th>날짜</th><th>회의명</th></tr>
-        <tr onclick="alert('회의록 상세')"><td>2026-04-01</td><td>외부 미팅</td></tr>
-      </table>
-    </div>
-
-    <!-- 배정인원 -->
-    <div id="member" class="tab hidden">
-      <h3>프로젝트 배정인원</h3>
-      <pre>
-구조
- ├ 기초 (팀장, 직원1, 직원2, 직원3)
- ├ 주차장 수평
- ├ 주차장 수직
- ├ 아파트 수평
- └ 아파트 수직
-
-마감
- ├ 내부
- ├ 외부
- ├ 조적
- └ 창호
-
-토목 / 클레임 / ES
-      </pre>
-    </div>
-
-    <!-- 메일 -->
-    <div id="mail" class="tab hidden">
-      <h3>관련메일</h3>
-      <table>
-        <tr><th>발신자</th><th>제목</th></tr>
-        <tr><td>홍길동</td><td>프로젝트 관련 문의</td></tr>
-      </table>
-    </div>
-
-    <!-- 수주 -->
-    <div id="order" class="tab hidden">
-      <h3>수주일정</h3>
-      <p>수주일: 2026-04-01</p>
-
-      <button onclick="requestReason()">착수 지연 사유서 작성</button>
-      <button onclick="approve()">승인</button>
-
-      <p id="startDate"></p>
-    </div>
-
-    <!-- 완료 -->
-    <div id="complete" class="tab hidden">
-      <h3>완료시점</h3>
-      <p>완료예정일: 2026-12-30</p>
-      <button onclick="changeComplete()">변경</button>
-    </div>
-
-    <!-- 납품 -->
-    <div id="delivery" class="tab hidden">
-      <h3>납품관리</h3>
-      <ul>
-        <li>1차 납품 <button onclick="requestDownload()">다운로드 요청</button></li>
-        <li>2차 납품 <button onclick="requestDownload()">다운로드 요청</button></li>
-      </ul>
-    </div>
-
   </div>
 
-</div>
-
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
